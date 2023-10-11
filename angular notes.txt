@@ -202,7 +202,6 @@ export class TempConversionPipe implements PipeTransform {
     }
     return;
   }
-
 }
 
 Componennt communication: 
@@ -289,18 +288,97 @@ data if condi is true
 
 
 
+11-10-23
+
+Angular component lifecycle:
+
+component lifecycle definition: journey of component from start to end. 
+
+- what is lifecycle hooks: steps to check input properties, change or updation , remove
+
+- what is change detection cycle: it is synchronization of component properties with our template or html
+
+- constructor -  it loads with normal javascript class when class initialize, 
+
+8 steps for anguar lifecycle hooks:
+
+-ngOnChanges: when our input properties changes it excecutes, it executes first and repeteadly when property changes
+-ngOnInit: it execute only once in lifecycle after component creation, it used when we need to initialize some properties or data.
+-ngDoCheck: it execute on every change detection cycle, onpush , default, when we use onpush chage detection we use this hook
+-ngAfterCotentInit: it calls after projected content is initialized,  
+eg: app.component.html
+<child-comp><div> .. dom projected content</div> </child-comp>
+
+-ngAfterContentChecked: it checks projected content after every change detection cycle
+-ngAfterViewInit: it calls after component view and projected content are initialized, 
+-ngAfterViewChecked: it checks component view and projected content 
+-ngOnDestroy: it calls before component gets removed, we do any cleanup logic
+
+how to use lifecycle hooks- 
+importing hook interfaces
+eg: import {component, Oninit} from 'angular/code'
+and implementating hook interfaces
+
+eg: export class AppComponent implements onInit {
+  // create hook method
+  ngOnInit() {
+
+  }
+}
+
+order of execution of life cycle hooks
+
+example
+
+import { Component, OnInit, OnDestroy, OnChanges, SimpleChanges, DoCheck, AfterContentInit, AfterContentChecked } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+
+export class AppComponent implements OnInit, OnDestroy, OnChanges, DoCheck, AfterContentInit, AfterContentChecked {
+
+  constructor() {
+    console.log('app component constructed');
+  }
+  ngOnDestroy(): void {
+    console.log('appcompojent: destroy');
+    
+  }
+  ngAfterContentInit(){
+    console.log('apppcomponent: afercontentinit');
+    
+  }
+  ngAfterContentChecked() {
+    console.log('apppcomponent: afercontentchecked');
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+       console.log('appcomponent:ngonchanges');
+  }
+
+  ngOnInit() {
+    console.log('appcomponent:ngoninit');
+    
+  }
+
+  ngDoCheck() {
+    console.log('appcomponent:ngDocheck');
+  }
+
+  title = 'My first angular app';
 
 
+  showAlert() {
+    alert('event binding angular')
+  }
 
-
-
-
-
-
-
-
-
-
+  updateParnent(event: any) {
+    alert(event);
+  }
+}
 
 
 
