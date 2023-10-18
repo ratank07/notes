@@ -380,6 +380,82 @@ export class AppComponent implements OnInit, OnDestroy, OnChanges, DoCheck, Afte
   }
 }
 
+forms in angular:
+
+1. template driven form : - we define behavior using directive and attributes in template, 
+we code more in template and less in component ts file,
+
+  1. set up form with ngForm directive
+  2. input controls defined using ngModel
+  3. ngModel provide two way binding
+  4. validation confogured using directive in template,
+
+importing formsModule in app.mudule.ts file
+
+import {FormsModule} from "@angular/core";
+
+@ngModule({
+  import: [FormsModule]
+})
+defiine template form using ngForm directive
 
 
+<form #myForm="ngForm" (ngSubmit)="submitForm(myForm)>
+  <p> 
+  <label for="fname">First Name </label>
+  <input type="text" name="fname" ngModel>
+  </p>
 
+  <p> 
+  <label for="email">Email </label>
+  <input type="email" name="email" ngModel>
+  </p>
+
+  <button type="submit"> Submit</button>
+ </form>
+
+2. reactive form: it also known as model driven form, we import ReactiveFormsModule for this, 
+ we use formGroup, formControl, formArays
+ we define structure of our form in component class, aslo we define validation in component class
+
+how to use reactive form
+
+1. import ReactiveFormsModule
+  app.module.ts 
+
+  import {ReactiveFormsModule} from '@angular/forms'
+
+  @ngModule({
+    imports: [ReactiveFormsModule, formsModule, ]
+  })
+
+2. create form model in component class using formGroup, formControl, formArays
+
+  app.component.ts 
+
+  import {formGroup, formCOntrol, formArray}
+
+contactForm = new FormGroup({
+  fName: new formControl('Ratan'),
+  email: new FormControl(),
+})
+
+3. create html form ressemmling the form model created in component class,
+
+app.component.html 
+
+<form [formGroup]="contactForm" (ngSubmit)="saveContact()">
+
+<p> 
+<label> First Name </label>
+<input type="text"  formControlName="fName" >
+</p>
+
+<p> 
+<label> Email </label>
+<input type="email" formControlName="email" >
+</p>
+
+<button type="submit">Submit Form</button>
+ </form>
+4. bind html form with the model
