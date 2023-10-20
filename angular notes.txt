@@ -382,9 +382,8 @@ export class AppComponent implements OnInit, OnDestroy, OnChanges, DoCheck, Afte
 
 forms in angular:
 
-1. template driven form : - we define behavior using directive and attributes in template, 
+1. template driven form: - we define behavior using directive and attributes in template, 
 we code more in template and less in component ts file,
-
   1. set up form with ngForm directive
   2. input controls defined using ngModel
   3. ngModel provide two way binding
@@ -433,7 +432,7 @@ how to use reactive form
 
   app.component.ts 
 
-  import {formGroup, formCOntrol, formArray}
+  import {formGroup, formCOntrol, formArray} from '@angular/form'
 
 contactForm = new FormGroup({
   fName: new formControl('Ratan'),
@@ -459,3 +458,114 @@ app.component.html
 <button type="submit">Submit Form</button>
  </form>
 4. bind html form with the model
+
+
+-- Services and dependancy injection
+
+1. what is services in angular
+2. what is dependancy injection
+3. what is injector, @injectable amd @inject
+4. what are providers
+5. what is injection token
+6. what is hierarchical dependancy injection
+7. what is angular singletone services
+8. what is providedin root, any
+9. what is @self, @skipSelf, and @optional decorator
+10 @what is @Host decorator in angular
+11. what is ViewProviders in angular
+
+1. what is services in angular: 
+  service peace of reusable code,  A code that you will use in many components across your application
+What Angular Services are used for
+Features that are independent of components such a logging services
+Share logic or data across components
+Encapsulate external interactions like data access
+
+
+2. what is dependancy injection: 
+Dependency Injection (DI) is a technique in which a class receives its dependencies from external sources rather than creating them itself.
+Our AppComponent does not create the instance of the service. It just asks for it in its Constructor. The responsibility of Creating the service falls on the creator of the AppComponent.
+
+app.component.ts
+
+let productService = new productService(); without  dependancy injection
+
+constructor(private productService: ProjectService) { // injecting dependancy
+
+}
+
+
+3. what is injector, @injectable amd @inject;
+injector is responsible for injecting dependancy in component or service,
+
+injector is created when our app bootstrap, /
+registring service with injector: 
+in component
+providers: [productService]
+
+@inject: contructor parameter when angular need to inject paramter provided in injector token, 
+
+4. what are providers: 
+it allows to register class or function with angular dependancy injectin system. 
+@injectable, providers, 
+
+
+5. what is injection token
+6. what is hierarchical dependancy injection
+7. what is angular singletone services
+8. what is providedin root, any
+9. what is @self, @skipSelf, and @optional decorator
+10 @what is @Host decorator in angular
+11. what is ViewProviders in angular
+
+
+Routing: navigation from one view to another view,
+eg: menu bar to navigate to diff viewsusing angular riuter
+
+Angular Router: 
+@angular/router has router related functionalitites
+
+1. navigate between views
+2. passing parameters to the view
+3. handle back and forward buttons of browser
+4. protect routr from unathorized users to view. 
+
+Component of router
+
+1. Router : handling click events, navigate(), navigateByUrl()
+2. Route: it has path of route, we can parse route url 
+3. router outlet: <router-outlet> its placeholder for app, here our app components shows, child routes visible here
+4. RouterLink: its directive to handle binding of html route path
+5. RouterLinkActive: it activate css class to current active route
+
+
+registering route in app
+
+import RouterModule from '@angular/router'
+
+app.module.ts 
+
+export const appRoutes: Routes = [
+  {path: 'home', component: homeComponent},
+  {path: 'product', component: ProductCopmponent}
+]
+
+import: [RouterModule.forRoot(appRoutes)]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
