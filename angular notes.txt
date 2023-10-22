@@ -553,6 +553,62 @@ export const appRoutes: Routes = [
 import: [RouterModule.forRoot(appRoutes)]
 
 
+HttpClient 
+
+HttpClient is model available in '@angular/common/http'
+
+app.module.ts
+
+import {HttpClientModule} from '@angular/common/http'
+
+@ngModule({
+  imports: [HttpClientModule]
+})
+
+to use it in our component or in service, we need to import HttpClient and crete dependancy and inject in constructor
+
+
+app.component.ts 
+import {HttpClient} from '@angular/common/http'
+constructor(private httpClient: HttpClient) //injecting dependancy {
+  this.httpClient.get('url/abc')
+}
+
+
+observables: use in asynchronous programming, 
+synchronous: execute req one by one
+ 3 req, 1 take 30 sec, 2 req 1 min, 3 req 2 min
+1 30+ 2 1 min + 3 2 min = total time to execute 3 min 30 sec
+
+async: dont wait for req to complete, background work,  30 , 1 min, 2 min =>  2 min total req execute
+
+
+subscribe to observable,
+
+eg: subscribe to newspaper, wil get paper when its dispached,
+
+ youtube: you will get notification on new video when you subscribe to channel
+
+ in angular import observable to use subscription in angular
+
+
+ HTTP REQ Types
+
+1. http get 
+syntax: 
+get(url, options: {
+  headers: HttpHeaders,
+  params: HtttpParams,
+  observe: body | response |events ,
+  responsType: Text | blob | json | arrayBuffer
+}): observable
+
+
+2. http post 
+3. http delete
+4. http put
+5. htpp patch
+
 
 
 
