@@ -797,13 +797,194 @@ Unsubscribing from an Observable
 
 
 
+SUbjets: 03-11-23
+
+What are Subjects ?
+How does Subjects work
+Creating a Subject in Angular
+Subject is an Observable
+Subject is hot Observable
+Cold observable
+Hot observable
+Every Subject is an Observer
+Subjects are Multicast
+Multicast vs Unicast
+other types of subjects
+
+What are Subjects ?
+A Subject is a special type of Observable that allows values to be multicasted to many Observers.
+subject can act as both observable & an observer.
+
+How does Subjects work
+Subjects implement both subscribe method and next, error & complete methods. It also maintains a collection of observers[]
 
 
+Creating a Subject in Angular
+The following code shows how to create a subject in Angular.
+
+import { Subject } from "rxjs";
+ 
+@Component({
+  selector: "my-app",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"]
+})
+export class AppComponent {
+ 
+  subject$ = new Subject();
+ 
+  ngOnInit() {
+    
+    this.subject$.subscribe(val => {
+      console.log(val);
+    });
+ 
+    this.subject$.next("1");
+    this.subject$.next("2");
+    this.subject$.complete();
+  }
+}
+
+Subject is hot Observable
+Observables are classified into two groups. Cold & Hot
+
+Cold observable
+The cold observable does not activate the producer until there is a subscriber. This is usually the case when the observable itself produces the data.
+
+export class AppComponent {
+  obs1$ = of(1, 2, 3, 4);
+ 
+  obs$ = new Observable(observer => {
+    console.log("Observable starts");
+    observer.next("1");
+    observer.next("2");
+    observer.next("3");
+    observer.next("4");
+    observer.next("5");
+  });
+ 
+  ngOnInit() {
+    this.obs$.subscribe(val => {
+      console.log(val);
+    });
+  }
+}
+
+Hot observable
+The hot observable does not wait for a subscriber to emit the data. It can start emitting the values right away. The happens when the producer is outside the observable.
+
+  subject$ = new Subject();
+ 
+  ngOnInit() {
+    this.subject$.next("1");
+    this.subject$.next("2");
+    this.subject$.complete();
+  }
+
+Every Subject is an Observer
+The observer needs to implement the next, error & Complete callbacks (all optional) to become an Observer
+
+other types of subjects
+
+ReplaySubject
+BehaviorSubject
+AsyncSubject
 
 
+BehaviorSubject
+BehaviorSubject requires an initial value and stores the current value and emits it to the new subscribers.
+
+ subject$ = new BehaviorSubject("0");
+ 
+  ngOnInit() {
+    this.subject$.subscribe(val => {
+      console.log("Sub1 " + val);
+    });
+ 
+    this.subject$.next("1");
+    this.subject$.next("2");
+ 
+    this.subject$.subscribe(val => {
+      console.log("sub2 " + val);
+    });
+ 
+    this.subject$.next("3");
+    this.subject$.complete();
+  }
+
+ 
+
+ReplaySubject
+ReplaySubject replays old values to new subscribers when they first subscribe.
+
+  subject$ = new ReplaySubject();
+ 
+  ngOnInit() {
+    this.subject$.next("1");
+    this.subject$.next("2");
+ 
+    this.subject$.subscribe(
+      val => console.log("Sub1 " + val),
+      err => console.error("Sub1 " + err),
+      () => console.log("Sub1 Complete")
+    );
+ 
+    this.subject$.next("3");
+    this.subject$.next("4");
+ 
+    this.subject$.subscribe(val => {
+      console.log("sub2 " + val);
+    });
+ 
+    this.subject$.next("5");
+    this.subject$.complete();
+ 
+    this.subject$.error("err");
+    this.subject$.next("6");
+ 
+    this.subject$.subscribe(
+      val => {
+        console.log("sub3 " + val);
+      },
+      err => console.error("sub3 " + err),
+      () => console.log("Complete")
+    );
+  }
+}
 
 
+Assignment todo list using subject
+
+1. create service name todo service
+
+subject$ = new Subject();
+todoList;
+
+  subject creation, 
+  createTodo(item) {
+    this.todoList.push(item)
+    this.subject$.next(this.todoList)
+  }
+
+  getTodos() {
+    return subject$;
+  }
+
+2. create reactive form to crete todo item in new component
+
+this.todoService.createTodo(item)
+
+3. todo-list component
+
+this.todoService.getTodos().subscribe((list) => {
+
+})
+
+*ngFor="let item of list 
+
+item 
+
+delete()
 
 
-
-
+4. delet todo item on click on delete
